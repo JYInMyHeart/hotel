@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 默认为 <configuration scan="true" scanPeriod="60 seconds" debug="false"> -->
+<!-- scan 当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true -->
+<!-- scanPeriod 设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟 -->
+<!-- debug 当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false -->
+<configuration>
+
+    <!-- appender是指输出的形式或位置，name和class是两个必备属性 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoder负责两件事，一是把日志信息转换成字节数组，二是把字节数组写入到输出流。 -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd-HH:mm:ss.SSS} %level [%thread]-%class:%line>>%msg%n
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="logs" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${debug_path}/client_file.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>logs-%d{yyyy-MM-dd}.%i.zip</fileNamePattern>
+            <!-- each file should be at most 500MB, keep 30 days worth of history, but at most 3GB -->
+            <maxFileSize>500MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>3GB</totalSizeCap>
+        </rollingPolicy>
+
+        <!-- 触发策略，达到一定条件时将通知appender，触发滚动 -->
+        <triggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>500MB</maxFileSize>
+        </triggeringPolicy>
+
+        <encoder>
+            <pattern>%d{yyyy-MM-dd-HH:mm:ss.SSS} %level [%thread]-%class:%line>>%msg%n</pattern>
+        </encoder>
+
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!--过滤 Error-->
+            <level>ERROR</level>
+            <!--匹配到就禁止-->
+            <onMatch>DENY</onMatch>
+            <!--没有匹配到就允许-->
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+    </appender>
+
+
+
+    <!-- logger是用于输出的对象，java文件中getLogger("app")即获得的该name=app的logger -->
+    <!-- logger的name属性可指定为包名或类名。app是app.*的父亲，所有没有声明level的app.*都将继承app的level -->
+    <!-- addtivity属性表明是否向上级logger传递打印信息，即上级logger又重新打了一遍。默认为true -->
+    <logger name="com.alex" addtivity="false" level="info">
+        <appender-ref ref="logs"/>
+    </logger>
+
+    <!-- 根logger，level表示输出的level级别，从下到上为：TRACE, DEBUG, INFO, WARN, ERROR, ALL
+        和 OFF，低于这里设定级别的不显示 -->
+    <root level="info">
+        <!-- 表示该appender被引入到该logger中，一个logger可含多个appender，即多个输出位置或形式 -->
+        <!-- ref引用的是appender的name -->
+        <appender-ref ref="console"/>
+    </root>
+</configuration>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alex.mapper.PictureMapper">
+  <resultMap id="BaseResultMap" type="com.alex.bean.Picture">
+    <!--@mbg.generated-->
+    <!--@Table picture-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `path`, description
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from picture
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from picture
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.alex.bean.Picture" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into picture (`path`, description)
+    values (#{path,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.alex.bean.Picture" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into picture
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="path != null">
+        `path`,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="path != null">
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.alex.bean.Picture">
+    <!--@mbg.generated-->
+    update picture
+    <set>
+      <if test="path != null">
+        `path` = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.alex.bean.Picture">
+    <!--@mbg.generated-->
+    update picture
+    set `path` = #{path,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update picture
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`path` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.path != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.path,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="description = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.description != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.description,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into picture
+    (`path`, description)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.path,jdbcType=VARCHAR}, #{item.description,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+  <select id="list" resultMap="BaseResultMap">
+    select * from picture
+  </select>
+
+  <select id="count" resultType="int">
+    select count(id) from picture
+  </select>
+</mapper>
