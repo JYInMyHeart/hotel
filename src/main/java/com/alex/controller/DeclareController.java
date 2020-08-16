@@ -1,6 +1,7 @@
 package com.alex.controller;
 
 import com.alex.bean.Declare;
+import com.alex.bean.PageBean;
 import com.alex.service.DeclareService;
 import com.alex.util.ResponseEntity;
 import io.swagger.annotations.Api;
@@ -68,6 +69,22 @@ public class DeclareController {
     public ResponseEntity list() {
 
         List<Declare> declareList = declareService.list();
+        if (declareList != null) {
+            return ResponseEntity.data(declareList);
+        } else {
+            return ResponseEntity.ok();
+        }
+    }
+
+    @ApiOperation("宣传列表模糊查询")
+    @GetMapping(value = "/listByKeyword")
+    public ResponseEntity listByKeyword(@RequestParam(required = false) String keyword,
+                                        @RequestParam(value = "limit", required = false, defaultValue = "10") int limit,
+                                        @RequestParam(value = "asc", required = false, defaultValue = "asc") String asc,
+                                        @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                        @RequestParam(value = "sort", required = false, defaultValue = "") String sort) {
+
+        PageBean<Declare> declareList = declareService.listByKeyword(page, limit, sort, asc, keyword);
         if (declareList != null) {
             return ResponseEntity.data(declareList);
         } else {

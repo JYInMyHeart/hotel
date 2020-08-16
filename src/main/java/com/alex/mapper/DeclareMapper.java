@@ -2,9 +2,12 @@ package com.alex.mapper;
 
 import com.alex.bean.Declare;
 import java.util.List;
+import java.util.Map;
+
+import com.alex.service.BaseService;
 import org.apache.ibatis.annotations.Param;
 
-public interface DeclareMapper {
+public interface DeclareMapper extends BaseService<Declare> {
     int deleteByPrimaryKey(Integer id);
 
     int insert(Declare record);
@@ -23,5 +26,7 @@ public interface DeclareMapper {
 
     List<Declare> list();
 
-    Integer count();
+    Integer countAll();
+
+
 }

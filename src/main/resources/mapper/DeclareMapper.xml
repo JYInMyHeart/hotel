@@ -185,7 +185,31 @@
     select * from `declare`
   </select>
 
-  <select id="count" resultType="int">
+  <select id="countAll" resultType="int">
     select count(id) from `declare`
+  </select>
+
+  <select id="listByKeyword" resultMap="BaseResultMap">
+    select * from `declare`
+    <if test="keyword != null and keyword != ''">
+      where title like concat('%',#{keyword},'%') or content like concat('%',#{keyword},'%')
+    </if>
+    <if test="PageSort!=null and PageAsc!=null and PageSort != ''">
+      ORDER BY #{PageSort} #{PageAsc}
+    </if>
+    <if test="PageStart!=null and PageSize!=null">
+      limit #{PageStart},#{PageSize}
+    </if>
+  </select>
+
+  <select id="count" parameterType="Map" resultType="int">
+    select count(id)
+    from `declare`
+    where 1 = 1
+    <if test="keyword != null and keyword != ''">
+      and (title like concat('%',#{keyword},'%')
+      or content like concat('%',#{keyword},'%')
+   )
+    </if>
   </select>
 </mapper>

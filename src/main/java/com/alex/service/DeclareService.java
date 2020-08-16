@@ -1,14 +1,18 @@
 package com.alex.service;
 
 import com.alex.bean.Introduce;
+import com.alex.bean.PageBean;
+import com.alex.util.PageUtil;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
 import com.alex.mapper.DeclareMapper;
 import com.alex.bean.Declare;
 @Service
-public class DeclareService{
+public class DeclareService {
 
     @Resource
     private DeclareMapper declareMapper;
@@ -59,4 +63,13 @@ public class DeclareService{
     public List<Declare> list() {
         return declareMapper.list();
     }
+
+
+
+    public PageBean<Declare> listByKeyword(int page, int limit, String sort, String asc, String keyword) {
+        PageUtil<Declare, DeclareMapper> pageUtil = new PageUtil<>(declareMapper);
+        PageBean<Declare> bookPageBean = pageUtil.helper(page, limit, sort, asc, keyword);
+        return bookPageBean;
+    }
+
 }

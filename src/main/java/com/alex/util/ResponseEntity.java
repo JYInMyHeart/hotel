@@ -1,6 +1,8 @@
 package com.alex.util;
 
 
+import com.alex.bean.PageBean;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,6 +77,13 @@ public class ResponseEntity {
         ResponseEntity responseEntity = new ResponseEntity(200, "", MyUtil.getTime());
         responseEntity.putDataValue("records",list);
         responseEntity.setCount(list.size());
+        return responseEntity;
+    }
+
+    public static <T> ResponseEntity data(PageBean<T> pageBean) {
+        ResponseEntity responseEntity = new ResponseEntity(200, "", MyUtil.getTime());
+        responseEntity.putDataValue("records",pageBean);
+        responseEntity.setCount(pageBean.getLists().size());
         return responseEntity;
     }
 

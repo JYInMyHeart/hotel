@@ -111,7 +111,7 @@ public class UserService {
         map.put("room",roomMapper.count());
         map.put("floor",floorMapper.count());
         map.put("picture",pictureMapper.count());
-        map.put("declare",declareMapper.count());
+        map.put("declare",declareMapper.countAll());
         return map;
     }
 
