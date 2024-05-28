@@ -1,6 +1,5 @@
 package com.alex.service;
 
-import com.alex.bean.Notice;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import com.alex.bean.Introduce;

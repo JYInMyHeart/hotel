@@ -6,8 +6,6 @@ import com.alex.mapper.NoticeMapper;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
 import com.alex.bean.Notice;
 @Service
 public class NoticeService{
