@@ -1,6 +1,5 @@
 package com.alex.service;
 
-import com.alex.util.FileUtil;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
