@@ -2,8 +2,6 @@ package com.alex.mapper;
 
 import com.alex.bean.Notice;
 import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.annotations.Param;
 
 public interface NoticeMapper {
