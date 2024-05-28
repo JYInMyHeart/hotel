@@ -2,11 +2,11 @@ package com.alex.service;
 
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.List; 
 import com.alex.bean.Picture;
 import com.alex.mapper.PictureMapper;
 @Service
-public class PictureService{
+public class PictureService{ 
 
     @Resource
     private PictureMapper pictureMapper;
